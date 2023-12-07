@@ -1,7 +1,7 @@
 #![feature(impl_trait_in_assoc_type)]
 
 use core::mem::MaybeUninit;
-use safe_ecs::{
+use decentralecs::{
     Archetype, Columns, ColumnsApi, EcsTypeId, Entity, Joinable, SlowGhostToken, World, WorldId,
 };
 use std::{alloc::Layout, any::Any};
@@ -259,7 +259,7 @@ impl Columns for RawDynamicTable {
     }
 
     fn swap_remove_to(&mut self, old_col: usize, new_col: usize, entity_idx: usize) {
-        let (old_col, new_col) = safe_ecs::get_two_mut(&mut self.buf[..], old_col, new_col);
+        let (old_col, new_col) = decentralecs::get_two_mut(&mut self.buf[..], old_col, new_col);
         let chunks_per_component = self.layout.size() / self.layout.align();
         let component_chunks =
             (entity_idx * chunks_per_component)..((entity_idx + 1) * chunks_per_component);
@@ -290,7 +290,7 @@ impl<'a> Joinable for &'a DynamicTable {
         Self: 'world;
 
     fn assert_world_id(&self, world_id: WorldId) {
-        safe_ecs::assert_world_id(
+        decentralecs::assert_world_id(
             world_id,
             self.world_id,
             std::any::type_name::<DynamicTable>(),
@@ -349,7 +349,7 @@ impl<'a> Joinable for &'a mut DynamicTable {
         Self: 'world;
 
     fn assert_world_id(&self, world_id: WorldId) {
-        safe_ecs::assert_world_id(
+        decentralecs::assert_world_id(
             world_id,
             self.world_id,
             std::any::type_name::<DynamicTable>(),
@@ -431,7 +431,7 @@ fn unas_bytes<T>(data: &[MaybeUninit<u8>]) -> &T {
 #[cfg(test)]
 mod tests {
     use crate::*;
-    use safe_ecs::*;
+    use decentralecs::*;
 
     #[test]
     fn is_miri() {
@@ -720,7 +720,7 @@ mod tests {
 #[cfg(test)]
 mod mismatched_world_id_tests {
     use crate::*;
-    use safe_ecs::*;
+    use decentralecs::*;
 
     #[test]
     #[should_panic = "[Mismatched WorldIds]:"]

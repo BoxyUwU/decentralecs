@@ -1,3 +1,3 @@
 [workspace]
-members = ["not_ghost_cell", "safe_ecs", "safe_ecs_static", "safe_ecs_dynamic"]
+members = ["not_ghost_cell", "decentralecs", "decentralecs_static", "decentralecs_dynamic"]
 resolver = "2"

@@ -1,0 +1,11 @@
+[package]
+name = "decentralecs"
+version = "0.1.0"
+edition = "2021"
+homepage = "https://github.com/BoxyUwU/decentralecs"
+repository = "https://github.com/BoxyUwU/decentralecs"
+description = "ECS that allows for many unique features by having the user retain ownership of component storages"
+license = "MIT"
+
+[dependencies]
+not_ghost_cell = { path = "../not_ghost_cell" }

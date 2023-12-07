@@ -1,6 +1,6 @@
 #![forbid(unsafe_code)]
 
-use safe_ecs::{
+use decentralecs::{
     EcsTypeId, Entity, Joinable, SlowGhostToken, World, WorldId, {Archetype, Columns, ColumnsApi},
 };
 
@@ -93,7 +93,7 @@ impl<T> Columns for RawTable<T> {
 
     fn swap_remove_to(&mut self, old_col: usize, new_col: usize, entity_idx: usize) {
         let cols = &mut self.0[..];
-        let (old_col, end_col) = safe_ecs::get_two_mut(cols, old_col, new_col);
+        let (old_col, end_col) = decentralecs::get_two_mut(cols, old_col, new_col);
         end_col.push(old_col.swap_remove(entity_idx));
     }
 
@@ -119,7 +119,7 @@ impl<'a, T> Joinable for &'a Table<T> {
         Self: 'world;
 
     fn assert_world_id(&self, world_id: WorldId) {
-        safe_ecs::assert_world_id(world_id, self.2, std::any::type_name::<Table<T>>())
+        decentralecs::assert_world_id(world_id, self.2, std::any::type_name::<Table<T>>())
     }
 
     fn make_ids(&self, _: &World) -> Self::Ids {
@@ -173,7 +173,7 @@ impl<'a, T> Joinable for &'a mut Table<T> {
         Self: 'world;
 
     fn assert_world_id(&self, world_id: WorldId) {
-        safe_ecs::assert_world_id(world_id, self.2, std::any::type_name::<Table<T>>());
+        decentralecs::assert_world_id(world_id, self.2, std::any::type_name::<Table<T>>());
     }
 
     fn make_ids(&self, _: &World) -> Self::Ids {
@@ -227,7 +227,7 @@ impl<'a, T> Joinable for &'a mut Table<T> {
 #[cfg(test)]
 mod tests {
     use crate::*;
-    use safe_ecs::*;
+    use decentralecs::*;
 
     trait UnwrapNone {
         fn unwrap_none(self);
@@ -490,7 +490,7 @@ mod tests {
 #[cfg(test)]
 mod mismatched_world_id_tests {
     use crate::*;
-    use safe_ecs::*;
+    use decentralecs::*;
 
     #[test]
     #[should_panic = "[Mismatched WorldIds]:"]
