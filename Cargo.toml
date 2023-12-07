@@ -1,0 +1,3 @@
+[workspace]
+members = ["not_ghost_cell", "safe_ecs", "safe_ecs_static", "safe_ecs_dynamic"]
+resolver = "2"

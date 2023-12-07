@@ -1,1 +1,1 @@
-# decentralecs
+# safe-ecs
